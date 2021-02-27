@@ -46,6 +46,7 @@ for(i in seq_along(full_url_all_years)) {
 url_list_final <- unlist(url_list)
 url_list_final <- paste0(base_url, url_list_final)
 
+tibble(url = url_list_final) %>% write_csv("01_data/url_list.csv")
 
 
 # 3.0 Content ----
