@@ -32,6 +32,8 @@ url_large_tbl <- url_large_tbl %>%
 text_tbl <- tibble(text = unlist(holiday_tbl))
 
 text_tbl <- text_tbl %>% 
+  # Neyðist til að nota group_by fyrir str_extract_all
+  group_by(text) %>% 
   mutate(
     month = 
       case_when(str_detect(text, "enero")      ~ 1,
@@ -56,9 +58,9 @@ text_tbl <- text_tbl %>%
   
 
 text_tbl <- text_tbl %>% 
+  ungroup() %>% 
   bind_cols(url_large_tbl %>% select(-url)) %>% 
-  drop_na(date) %>% 
-  mutate(date_week = floor_date(date, "week", week_start = 1))
+  drop_na(date)
 
 text_tbl %>% 
   write_csv("01_data/date_province_data.csv")
